@@ -10,7 +10,7 @@
 }
 
 .main-header {  
-    padding: 1rem 2rem; 
+    padding: 1.5rem 2rem; 
 }
 
 .main-title {
@@ -19,7 +19,7 @@
 
 .main-header-paragraph {
     padding-left: 6rem;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
 }
 
 .header-infos {
@@ -35,14 +35,22 @@
 }
 
 .header-actions-filter {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     padding-right: 2rem;
 }
 
 .header-actions-button {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     padding: 0.5rem 2rem;
     color: white;
-    background-color: #3f51b5;
     border: 1px solid black;
+}
+
+.add-button {
+    margin-right: 2rem;
+    background-color: #3f51b5;
+}
+
+.sign-out-button {
+    background-color: #f44336;
 }
