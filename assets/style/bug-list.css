@@ -51,8 +51,16 @@
     background-color: #3f51b5;
 }
 
+.add-button:hover {
+    background-color: #344391;
+}
+
 .sign-out-button {
     background-color: #f44336;
+}
+
+.sign-out-button:hover {
+    background-color: #bc342d;
 }
 
 .bugs-list-section {
