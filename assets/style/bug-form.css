@@ -1,0 +1,20 @@
+.form-section {
+    width: 100%;
+    padding-top: 9rem;
+    padding-bottom: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-auth-form {
+    width: 30rem;
+}
+
+.custom-input-field {
+    width: 25rem;
+}
+
+.custom-submit-form-button {
+    margin-top: 0rem;
+}

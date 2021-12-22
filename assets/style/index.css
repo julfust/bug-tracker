@@ -8,27 +8,6 @@
     background-color: #f1f5f9;
 }
 
-.auth-form {
-    width: 25rem;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    background-color: white;
-    border-radius: 1rem;
-    -webkit-box-shadow: 1px 2px 16px 1px rgba(0,0,0,0.78); 
-    box-shadow: 1px 2px 16px 1px rgba(0,0,0,0.78);
-}
-
-.input-field-container {
-    padding-bottom: 2rem;
-}
-
-.form-title {
-    padding-bottom: 2rem;
-}
-
 .sign-up-paragraph {
     padding-bottom: 2rem;
 }
@@ -45,31 +24,4 @@
 
 .sign-up-link:hover {
     text-decoration: underline;
-}
-
-.input-field {
-    width: 20rem;
-    height: 3rem;
-    padding: 0 1rem;
-    border: 1px solid rgba(203,213,225);
-    border-radius: 6px;
-    outline: none;
-}
-
-.input-field:focus {
-    border-color: #473fce;
-}
-
-.submit-form-button {
-    width: 20rem;
-    margin-top: 2rem;
-    padding: 0.75rem 0;
-    border-radius: 9999px;
-    font-size: 1rem;
-    background-color: #473fce;
-    color: white;
-}
-
-.submit-form-button:hover {
-    background-color: #433dbf;
 }
