@@ -11,7 +11,7 @@ $(window).on("load", function() {
         window.location.href = "/";
     }));
 
-    getBugs(localStorage.getItem("token")).then((data) => setInnerBugList(data.result.bug));
+    getBugs().then((data) => setInnerBugList(data.result.bug));
 })
 
 function signOut() {
@@ -24,10 +24,10 @@ function signOut() {
 }
 
 
-function getBugs(token) {
+function getBugs() {
 
     return $.ajax({
-        url: `http://greenvelvet.alwaysdata.net/bugTracker/api/list/${token}/0`,
+        url: `http://greenvelvet.alwaysdata.net/bugTracker/api/list/${localStorage.getItem("token")}/0`,
         async: true,
         dataType: 'jsonp'
     })
@@ -36,49 +36,80 @@ function getBugs(token) {
 function setInnerBugList(bugs) {
 
     console.log(bugs);
+    
+    getUserList().then((data) => {
 
-    bugs.map((bug) => {
+        const userList = data.result.user;
+        let innerContent = "";
 
-        $("#bugs-list").append(`
-            <div class="list-grid" id="list-grid">
-                <div class="list-grid-item bug-info">
-                    <h3 class="bug-title">${bug.title}</h3>
-                    <p class="bug-description">${bug.description}</p>
+        bugs.map((bug) => {
+
+            innerContent += `
+                <div class="list-grid" id="list-grid">
+                    <div class="list-grid-item bug-info">
+                        <h3 class="bug-title">${bug.title}</h3>
+                        <p class="bug-description">${bug.description}</p>
+                    </div>
+
+                    <p class="list-grid-item bug-date">${formatDate(bug.timestamp)}</p>
+
+                    <p class="list-grid-item bug-name">${userList[parseInt(bug.user_id)]}</p>
+
+                    <div class="list-grid-item bug-state">
+                        <select name="bug-state" id="bug-state-select" class="bug-state-select" value=${bug.state}>
+                            <option value="1">Non traité</option>
+                            <option value="2">En cours</option>
+                            <option value="3">Traité</option>
+                        </select>
+                    </div>
+
+                    <div class="list-grid-item">
+                        <button class="delete-button" onclick="deleteBug(${bug.id})">Supprimer</button>
+                    </div>
                 </div>
+            `
 
-                <p class="list-grid-item bug-date">${formatDate(bug.timestamp)}</p>
+            $("#inner-bug-list").html(innerContent);
+        })
+    });
+}
 
-                <p class="list-grid-item bug-name">${bug.user_id}</p>
+function getUserList() {
 
-                <div class="list-grid-item bug-state">
-                    <select name="bug-state" id="bug-state-select" class="bug-state-select" value=${bug.state}>
-                        <option value="1">Non traité</option>
-                        <option value="2">En cours</option>
-                        <option value="3">Traité</option>
-                    </select>
-                </div>
-
-                ${
-                    bug.user_id === localStorage.getItem("userId") ?
-                        `<div class="list-grid-item">
-                            <button class="delete-button">Supprimer</button>
-                        </div>`
-                        :
-                        ""
-                }
-            </div>
-        `)
+    return $.ajax({
+        url: `http://greenvelvet.alwaysdata.net/bugTracker/api/users/${localStorage.getItem("token")}`,
+        async: true,
+        dataType: 'jsonp'
     })
 }
 
 function formatDate(timeStamp) {
 
-    const currentDate = new Date();
-
     let bugDate = new Date(timeStamp);
 
-    bugDate.setMonth(currentDate.getMonth());
-    bugDate.setFullYear(currentDate.getFullYear());
+    bugDate.setMonth(bugDate.getMonth() + 11);
+    bugDate.setFullYear(bugDate.getFullYear() + 51);
 
     return bugDate.toLocaleDateString("fr-FR");
+}
+
+function deleteBug(bugId) {
+
+    $.confirm({
+        title: '⚠️ Suppression',
+        content: 'Vous êtes sur le point de supprimer un bug. Les données seront perdu de facon définitive. <br />Souhaitez-vous continuer ?',
+        buttons: {
+            Valider: function () {
+                
+                $.ajax({
+                    url: `http://greenvelvet.alwaysdata.net/bugTracker/api/delete/${localStorage.getItem("token")}/${bugId}`,
+                    async: true,
+                    dataType: 'jsonp'
+                }).then(() => getBugs().then((data) => setInnerBugList(data.result.bug)))
+            },
+            Annuler: function () {
+                return;
+            }
+        }
+    });
 }

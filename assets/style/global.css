@@ -56,3 +56,26 @@ button {
 .debug {
     border: 1px solid red;
 }
+
+.jconfirm .jconfirm-cell {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 100% !important;
+    vertical-align: unset !important;
+}
+
+.jconfirm.jconfirm-light .jconfirm-box {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    width: 30rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+.jconfirm .jconfirm-box div.jconfirm-content-pane.no-scroll {
+    text-align: center !important;
+    padding: 1rem 0px !important;
+}
