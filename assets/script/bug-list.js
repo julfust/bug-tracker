@@ -8,6 +8,7 @@ $(window).on("load", function() {
         }
         
         localStorage.removeItem("token");
+        localStorage.removeItem("userId");
         window.location.href = "/";
     }));
 
@@ -36,6 +37,8 @@ function getBugs() {
 function setInnerBugList(bugs) {
 
     console.log(bugs);
+
+    $("#main-header-paragraph").html(`${bugs.length} bugs, ${bugs.filter((bug) => bug.state === "1").length} en cours, ${bugs.filter((bug) => bug.state === "2").length} traité`);
     
     getUserList().then((data) => {
 
@@ -56,10 +59,10 @@ function setInnerBugList(bugs) {
                     <p class="list-grid-item bug-name">${userList[parseInt(bug.user_id)]}</p>
 
                     <div class="list-grid-item bug-state">
-                        <select name="bug-state" id="bug-state-select" class="bug-state-select" value=${bug.state}>
-                            <option value="1">Non traité</option>
-                            <option value="2">En cours</option>
-                            <option value="3">Traité</option>
+                        <select name="bug-state" class="bug-state-select" onchange="changeBugState(${bug.id}, this)">
+                            <option value="0" ${bug.state === "0" ? "selected" : ""}>Non traité</option>
+                            <option value="1" ${bug.state === "1" ? "selected" : ""}>En cours</option>
+                            <option value="2" ${bug.state === "2" ? "selected" : ""}>Traité</option>
                         </select>
                     </div>
 
@@ -68,9 +71,9 @@ function setInnerBugList(bugs) {
                     </div>
                 </div>
             `
-
-            $("#inner-bug-list").html(innerContent);
         })
+
+        $("#inner-bug-list").html(innerContent);
     });
 }
 
@@ -93,6 +96,15 @@ function formatDate(timeStamp) {
     return bugDate.toLocaleDateString("fr-FR");
 }
 
+function changeBugState(bugId, selectBar) {
+
+    $.ajax({
+        url: `http://greenvelvet.alwaysdata.net/bugTracker/api/state/${localStorage.getItem("token")}/${bugId}/${selectBar.value}`,
+        async: true,
+        dataType: 'jsonp'
+    }).then(() => getBugs().then((data) => setInnerBugList(data.result.bug)));
+}
+
 function deleteBug(bugId) {
 
     $.confirm({
@@ -105,7 +117,7 @@ function deleteBug(bugId) {
                     url: `http://greenvelvet.alwaysdata.net/bugTracker/api/delete/${localStorage.getItem("token")}/${bugId}`,
                     async: true,
                     dataType: 'jsonp'
-                }).then(() => getBugs().then((data) => setInnerBugList(data.result.bug)))
+                }).then(() => getBugs().then((data) => setInnerBugList(data.result.bug)));
             },
             Annuler: function () {
                 return;
