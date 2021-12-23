@@ -3,7 +3,7 @@ $(window).on("load", function() {
     $("#sign-out-button").click(() => signOut().then((data) => {
 
         if(data.result.status === "failure") {
-            alert("Erreur serveur: déconnexion impossible");
+            alert("Erreur: déconnexion impossible");
             return;
         }
         

@@ -10,17 +10,15 @@ $(window).on("load", function() {
 
         e.preventDefault();
 
+        if(!login || !password) {
+            showError("Veuillez renseigner l'intégralité des champs");
+            return;
+        }
+
         signUp(login, password).then((data) => {
             
             if(data.result.status === "failure") {
-
-                $("#sign-up-paragraph").css("padding-bottom", "1rem");
-                $("#error-message").css("display", "block");
-                
-                $(".input-field").each(function() {
-                    $(this).css("border-color", "red");
-                });
-
+                showError("Identifiant ou mot de passe erroné");
                 return;
             }
 
@@ -38,4 +36,16 @@ function signUp(login, password) {
         async: true,
         dataType: 'jsonp'
     })
+}
+
+function showError(errorMessage) {
+
+    $("#sign-up-paragraph").css("padding-bottom", "1rem");
+
+    $("#error-message").text(errorMessage);
+    $("#error-message").css("display", "block");
+    
+    $(".input-field").each(function() {
+        $(this).css("border-color", "red");
+    });
 }

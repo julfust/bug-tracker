@@ -154,6 +154,13 @@ button {
     padding-bottom: 2rem;
 }
 
+.error-message {
+    display: none;
+    padding-bottom: 2rem;
+    color: red;
+    text-align: center;
+}
+
 .input-field-container {
     padding-bottom: 2rem;
 }
