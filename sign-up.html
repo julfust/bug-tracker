@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./assets/style/global.css">
-    <link rel="stylesheet" href="./assets/style/index.css">
+    <link rel="stylesheet" href="./assets/style/sign-up.css">
 </head>
 <body>
 
@@ -16,7 +16,7 @@
 
             <h1 class="form-title">Bug Tracker</h1>
 
-            <p class="sign-up-paragraph" id="sign-up-paragraph">Pas de compte ? <a href="./sign-up.html" class="sign-up-link">S'inscrire</a></p>
+            <p class="sign-up-paragraph" id="sign-up-paragraph">Vous avez un compte ? <a href="./index.html" class="sign-up-link">Se connecter</a></p>
 
             <p class="error-message" id="error-message"></p>
 
@@ -30,11 +30,16 @@
                 <input type="text" class="input-field" id="input-field-password" />
             </div>
 
+            <div class="input-field-container">
+                <p class="field-label">Retapez le mot de passe:</p>
+                <input type="text" class="input-field" id="input-field-password-confirm" />
+            </div>
+
             <button class="submit-form-button" id="submit-form-button">Entrer</button>
         </form>
     </div>
     
     <script src="./assets/script/lib/jquery-3.6.0.min.js"></script>
-    <script src="./assets/script/index.js"></script>
+    <script src="assets/script/sign-up.js"></script>
 </body>
 </html>

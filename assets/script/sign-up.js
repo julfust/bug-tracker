@@ -2,37 +2,44 @@ $(window).on("load", function() {
 
     let login = "";
     let password = "";
+    let passwordConfirm = "";
 
     $("#input-field-login").change((e) => login = e.target.value);
     $("#input-field-password").change((e) => password = e.target.value);
+    $("#input-field-password-confirm").change((e) => passwordConfirm = e.target.value);
 
-    $("#submit-form-button").click((e) =>{
+    $("#submit-form-button").click((e) => {
 
         e.preventDefault();
 
-        if(!login || !password) {
+        if(!login || !password || !passwordConfirm) {
             showError("Veuillez renseigner l'intégralité des champs");
             return;
         }
 
-        signIn(login, password).then((data) => {
-            
+        if(password !== passwordConfirm) {
+            showError("Les champs des mots de passe doivent être identiques");
+            return;
+        }
+
+        signUp(login, password).then((data) => {
+
             if(data.result.status === "failure") {
-                showError("Identifiant ou mot de passe erroné");
+                showError("Ce nom d'utilisateur a déjà été pris Veuillez en sélectionner un autre");
                 return;
             }
 
             localStorage.setItem("token", data.result.token);
             localStorage.setItem("userId", data.result.id);
             window.location.href = "./bug-list.html";
-        })
-    });
+        });
+    })
 })
 
-function signIn(login, password) {
+function signUp(login, password) {
 
     return $.ajax({
-        url: `http://greenvelvet.alwaysdata.net/bugTracker/api/login/${login}/${password}`,
+        url: `http://greenvelvet.alwaysdata.net/bugTracker/api/signup/${login}/${password}`,
         async: true,
         dataType: 'jsonp'
     })

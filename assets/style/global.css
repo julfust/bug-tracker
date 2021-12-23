@@ -137,6 +137,15 @@ button {
     background-color: #bc342d;
 }
 
+.form-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f1f5f9;
+}
+
 .auth-form {
     width: 25rem;
     padding: 2rem;
@@ -152,6 +161,18 @@ button {
 
 .form-title {
     padding-bottom: 2rem;
+}
+
+.sign-up-paragraph {
+    padding-bottom: 2rem;
+}
+
+.sign-up-link {
+    color: #6368f2;
+}
+
+.sign-up-link:hover {
+    text-decoration: underline;
 }
 
 .error-message {
@@ -186,7 +207,7 @@ button {
 
 .submit-form-button {
     width: 20rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
     padding: 0.75rem 0;
     border-radius: 9999px;
     font-size: 1rem;

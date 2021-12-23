@@ -12,6 +12,9 @@ $(window).on("load", function() {
         window.location.href = "/";
     }));
 
+    $("#filter-user-bug").click(() => getBugs(localStorage.getItem("userId")).then((data) => setInnerBugList(data.result.bug)));
+    $("#no-filter").click(() => getBugs().then((data) => setInnerBugList(data.result.bug)));
+
     getBugs().then((data) => setInnerBugList(data.result.bug));
 })
 
@@ -25,10 +28,12 @@ function signOut() {
 }
 
 
-function getBugs() {
+function getBugs(userId = "0") {
+
+    console.log(userId);
 
     return $.ajax({
-        url: `http://greenvelvet.alwaysdata.net/bugTracker/api/list/${localStorage.getItem("token")}/0`,
+        url: `http://greenvelvet.alwaysdata.net/bugTracker/api/list/${localStorage.getItem("token")}/${userId}`,
         async: true,
         dataType: 'jsonp'
     })
