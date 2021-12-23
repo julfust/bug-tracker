@@ -1,3 +1,6 @@
+let userList = [];
+let bugList = [];
+
 $(window).on("load", function() {
 
     $("#sign-out-button").click(() => signOut().then((data) => {
@@ -12,10 +15,45 @@ $(window).on("load", function() {
         window.location.href = "/";
     }));
 
-    $("#filter-user-bug").click(() => getBugs(localStorage.getItem("userId")).then((data) => setInnerBugList(data.result.bug)));
-    $("#no-filter").click(() => getBugs().then((data) => setInnerBugList(data.result.bug)));
+    $("#filter-user-bug").click(() => getBugs(localStorage.getItem("userId")).then((data) => {
 
-    getBugs().then((data) => setInnerBugList(data.result.bug));
+        bugList = data.result.bug;
+
+        getUserList().then((data) => {
+
+            userList = data.result.user;
+
+            $("#main-header-paragraph").html(`${bugList.length} bugs, ${bugList.filter((bug) => bug.state === "1").length} en cours, ${bugList.filter((bug) => bug.state === "2").length} traité`);
+            
+            setInnerBugList();
+        })
+    }));
+    
+    $("#no-filter").click(() => getBugs().then((data) => {
+
+        bugList = data.result.bug;
+
+        getUserList().then((data) => {
+
+            userList = data.result.user;
+
+            $("#main-header-paragraph").html(`${bugList.length} bugs, ${bugList.filter((bug) => bug.state === "1").length} en cours, ${bugList.filter((bug) => bug.state === "2").length} traité`);
+            
+            setInnerBugList();
+        })
+    }));
+
+    getBugs().then((data) => {
+
+        bugList = data.result.bug;
+
+        $("#main-header-paragraph").html(`${bugList.length} bugs, ${bugList.filter((bug) => bug.state === "1").length} en cours, ${bugList.filter((bug) => bug.state === "2").length} traité`);
+
+        getUserList().then((data) => {
+            userList = data.result.user;
+            setInnerBugList();
+        })
+    });
 })
 
 function signOut() {
@@ -30,8 +68,6 @@ function signOut() {
 
 function getBugs(userId = "0") {
 
-    console.log(userId);
-
     return $.ajax({
         url: `http://greenvelvet.alwaysdata.net/bugTracker/api/list/${localStorage.getItem("token")}/${userId}`,
         async: true,
@@ -39,47 +75,39 @@ function getBugs(userId = "0") {
     })
 }
 
-function setInnerBugList(bugs) {
+function setInnerBugList() {
 
-    console.log(bugs);
+    let innerContent = "";
 
-    $("#main-header-paragraph").html(`${bugs.length} bugs, ${bugs.filter((bug) => bug.state === "1").length} en cours, ${bugs.filter((bug) => bug.state === "2").length} traité`);
-    
-    getUserList().then((data) => {
+    bugList.map((bug) => {
 
-        const userList = data.result.user;
-        let innerContent = "";
-
-        bugs.map((bug) => {
-
-            innerContent += `
-                <div class="list-grid" id="list-grid">
-                    <div class="list-grid-item bug-info">
-                        <h3 class="bug-title">${bug.title}</h3>
-                        <p class="bug-description">${bug.description}</p>
-                    </div>
-
-                    <p class="list-grid-item bug-date">${formatDate(bug.timestamp)}</p>
-
-                    <p class="list-grid-item bug-name">${userList[parseInt(bug.user_id)]}</p>
-
-                    <div class="list-grid-item bug-state">
-                        <select name="bug-state" class="bug-state-select" onchange="changeBugState(${bug.id}, this)">
-                            <option value="0" ${bug.state === "0" ? "selected" : ""}>Non traité</option>
-                            <option value="1" ${bug.state === "1" ? "selected" : ""}>En cours</option>
-                            <option value="2" ${bug.state === "2" ? "selected" : ""}>Traité</option>
-                        </select>
-                    </div>
-
-                    <div class="list-grid-item">
-                        <button class="delete-button" onclick="deleteBug(${bug.id})">Supprimer</button>
-                    </div>
+        innerContent += `
+            <div class="list-grid" id="list-grid">
+                <div class="list-grid-item bug-info">
+                    <h3 class="bug-title">${bug.title}</h3>
+                    <p class="bug-description">${bug.description}</p>
                 </div>
-            `
-        })
 
-        $("#inner-bug-list").html(innerContent);
-    });
+                <p class="list-grid-item bug-date">${formatDate(bug.timestamp)}</p>
+
+                <p class="list-grid-item bug-name">${userList[parseInt(bug.user_id)]}</p>
+
+                <div class="list-grid-item bug-state">
+                    <select name="bug-state" class="bug-state-select" onchange="changeBugState(${bug.id}, this)">
+                        <option value="0" ${bug.state === "0" ? "selected" : ""}>Non traité</option>
+                        <option value="1" ${bug.state === "1" ? "selected" : ""}>En cours</option>
+                        <option value="2" ${bug.state === "2" ? "selected" : ""}>Traité</option>
+                    </select>
+                </div>
+
+                <div class="list-grid-item">
+                    <button class="delete-button" onclick="deleteBug(${bug.id})">Supprimer</button>
+                </div>
+            </div>
+        `
+    })
+
+    $("#inner-bug-list").html(innerContent);
 }
 
 function getUserList() {
@@ -107,7 +135,12 @@ function changeBugState(bugId, selectBar) {
         url: `http://greenvelvet.alwaysdata.net/bugTracker/api/state/${localStorage.getItem("token")}/${bugId}/${selectBar.value}`,
         async: true,
         dataType: 'jsonp'
-    }).then(() => getBugs().then((data) => setInnerBugList(data.result.bug)));
+    }).then(() => {
+        const bugIndex = bugList.findIndex((bug) => parseInt(bug.id) === bugId);
+        bugList[bugIndex].state = selectBar.value;
+
+        $("#main-header-paragraph").html(`${bugList.length} bugs, ${bugList.filter((bug) => bug.state === "1").length} en cours, ${bugList.filter((bug) => bug.state === "2").length} traité`);
+    });
 }
 
 function deleteBug(bugId) {
@@ -122,7 +155,14 @@ function deleteBug(bugId) {
                     url: `http://greenvelvet.alwaysdata.net/bugTracker/api/delete/${localStorage.getItem("token")}/${bugId}`,
                     async: true,
                     dataType: 'jsonp'
-                }).then(() => getBugs().then((data) => setInnerBugList(data.result.bug)));
+                }).then(() => {
+
+                    bugList = bugList.filter((bug) => parseInt(bug.id) !== bugId);
+
+                    $("#main-header-paragraph").html(`${bugList.length} bugs, ${bugList.filter((bug) => bug.state === "1").length} en cours, ${bugList.filter((bug) => bug.state === "2").length} traité`);
+
+                    setInnerBugList();
+                });
             },
             Annuler: function () {
                 return;

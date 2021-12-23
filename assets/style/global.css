@@ -89,7 +89,7 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid #c9ced4;
 }
 
 .header-infos {
@@ -109,7 +109,7 @@ button {
 }
 
 .header-actions-filter {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     padding-right: 2rem;
 }
 
@@ -118,11 +118,12 @@ button {
     padding: 0.5rem 2rem;
     color: white;
     border: 1px solid black;
+    border-radius: 9999px;
 }
 
 .header-actions-link {
     margin-right: 2rem;
-    background-color: #3f51b5;
+    background-color: #473fce;
 }
 
 .header-actions-link:hover {
@@ -130,11 +131,11 @@ button {
 }
 
 .header-actions-button {
-    background-color: #f44336;
+    background-color: #EA2027;
 }
 
 .header-actions-button:hover {
-    background-color: #bc342d;
+    background-color: #ac181d;
 }
 
 .form-container {

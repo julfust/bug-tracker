@@ -1,5 +1,17 @@
 $(window).on("load", function() {
 
+    $("#sign-out-button").click(() => signOut().then((data) => {
+
+        if(data.result.status === "failure") {
+            alert("Erreur: déconnexion impossible");
+            return;
+        }
+        
+        localStorage.removeItem("token");
+        localStorage.removeItem("userId");
+        window.location.href = "/";
+    }));
+
     let title = "";
     let description = "";
 
@@ -30,6 +42,15 @@ $(window).on("load", function() {
         });
     })
 })
+
+function signOut() {
+
+    return $.ajax({
+        url: `http://greenvelvet.alwaysdata.net/bugTracker/api/logout/${localStorage.getItem("token")}`,
+        async: true,
+        dataType: 'jsonp'
+    })
+}
 
 function addBug(formData) {
 

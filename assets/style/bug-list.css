@@ -4,7 +4,7 @@
 
 .main-header-paragraph {
     padding-left: 6rem;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
 .bugs-list-section {
@@ -16,14 +16,13 @@
 }
 
 .list-grid {
-    padding: 1rem 0;
+    padding: 1.5rem 1rem;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid #c9ced4;
 }
 
 .bugs-list-header {
-    border-top: 1px solid grey;
     background-color: rgba(248,250,252);
 }
 
@@ -40,6 +39,7 @@
 }
 
 .bug-title {
+    text-align: center;
     margin-bottom: 0.25rem;
 }
 
@@ -54,10 +54,28 @@
 .delete-button {
     padding: 0.25rem 1rem;
     color: white;
-    background-color: #f44336;
+    background-color: #EA2027;
     border: 1px solid black;
+    border-radius: 9999px;
 }
 
-.column-name, .bug-title, .bug-description, .bug-date, .bug-name, .bug-state-select, .delete-button {
-    font-size: 1.25rem;
+.delete-button:hover {
+    background-color: #ac181d;
+}
+
+.column-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.bug-title, .bug-description, .bug-date, .bug-name, .bug-state-select, .delete-button {
+    font-size: 1.1rem;
+}
+
+.bug-description {
+    text-align: center;
+    width: 18rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
