@@ -108,6 +108,10 @@ button {
     align-items: center;
 }
 
+.actions-filter-container, .actions-button-container {
+    display: flex;
+}
+
 .header-actions-filter {
     font-size: 1.2rem;
     padding-right: 2rem;
@@ -232,4 +236,28 @@ button {
 /* Debug class (temporary used for developpement) */
 .debug {
     border: 1px solid red;
+}
+
+@media screen and (max-width: 1280px) {
+
+    .main-header {
+        padding: 2rem 2rem;
+        flex-direction: column;
+    }
+
+    .header-infos {
+        flex-direction: column;
+        padding-bottom: 1.5rem;
+    }
+
+    .main-title {
+        padding-bottom: 0.5rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    .header-actions {
+        flex-direction: column;
+    }
 }

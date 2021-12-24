@@ -22,20 +22,25 @@
 
             <div class="header-actions">
 
-                <a class="header-actions-filter" id="no-filter" href="#">Liste complète</a>
-                <a class="header-actions-filter" id="filter-user-bug" href="#">A traiter</a>
-                <a class="header-actions-link" href="./bug-form.html">Ajouter</a>
-                <button class="header-actions-button" id="sign-out-button">Déconnexion</button>
+                <div class="actions-filter-container">
+                    <a class="header-actions-filter" id="no-filter" href="#">Liste complète</a>
+                    <a class="header-actions-filter" id="filter-user-bug" href="#">A traiter</a>
+                </div>
+
+                <div class="actions-button-container">
+                    <a class="header-actions-link" href="./bug-form.html">Ajouter</a>
+                    <button class="header-actions-button" id="sign-out-button">Déconnexion</button>
+                </div>
             </div>
         </header>
 
         <section class="bugs-list-section">
             <div class="bugs-list" id="bugs-list">
                 <div class="list-grid bugs-list-header">
-                    <div class="column-name">Désignation</div>
-                    <div class="column-name">Date</div>
-                    <div class="column-name">Nom</div>
-                    <div class="column-name">Etat</div>
+                    <div class="column-name rubrique-name">Désignation</div>
+                    <div class="column-name rubrique-date">Date</div>
+                    <div class="column-name rubrique-author">Nom</div>
+                    <div class="column-name rubrique-state">Etat</div>
                 </div>
             </div>
 

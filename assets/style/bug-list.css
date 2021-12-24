@@ -73,11 +73,9 @@
 }
 
 .bug-description {
+    max-height: 5rem;
     text-align: center;
-    width: 18rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    overflow-y: auto;
 }
 
 .pagination-container {
@@ -85,4 +83,49 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+
+@media screen and (max-width: 1280px) {
+
+    .main-header-paragraph {
+        padding-left: 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .actions-filter-container {
+        padding-bottom: 1rem;
+    }
+
+    .list-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .rubrique-date, .rubrique-author, .bug-date, .bug-name {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .main-title {
+        font-size: 1.5rem;
+    }
+
+    .main-header-paragraph, .header-actions-filter {
+        font-size: 1rem;
+    }
+
+    .header-actions {
+        width: 70%;
+    }
+
+    .header-actions-link, .header-actions-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .bug-description {
+        display: none;
+    }
 }
