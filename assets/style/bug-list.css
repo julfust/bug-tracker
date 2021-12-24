@@ -125,6 +125,14 @@
         font-size: 0.9rem;
     }
 
+    .column-name {
+        font-size: 0.9rem;
+    }
+
+    .bug-title, .bug-date, .bug-name, .bug-state-select, .delete-button {
+        font-size: 0.9rem;
+    }
+
     .bug-description {
         display: none;
     }
