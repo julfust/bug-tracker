@@ -1,7 +1,6 @@
 .form-section {
     width: 100%;
-    padding-top: 9rem;
-    padding-bottom: 4rem;
+    padding: 4rem 2rem 4rem 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,6 +10,10 @@
     width: 30rem;
 }
 
-.custom-input-field {
-    width: 25rem;
+@media screen and (max-width: 768px) {
+
+    .header-actions-filter {
+        padding-right: 0;
+        padding-bottom: 1rem;
+    }
 }
