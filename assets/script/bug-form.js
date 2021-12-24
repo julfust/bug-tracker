@@ -1,5 +1,10 @@
 $(window).on("load", function() {
 
+    if(!localStorage.getItem("token")) {
+        window.location.href = "/";
+        return;
+    }
+
     $("#sign-out-button").click(() => signOut().then((data) => {
 
         if(data.result.status === "failure") {

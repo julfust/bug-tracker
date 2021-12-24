@@ -1,5 +1,10 @@
 $(window).on("load", function() {
 
+    if(localStorage.getItem("token")) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userId");
+    }
+
     let login = "";
     let password = "";
     let passwordConfirm = "";
