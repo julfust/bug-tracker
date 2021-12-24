@@ -1,25 +1,25 @@
-.global-container {
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
-}
-
 .main-header-paragraph {
     padding-left: 6rem;
     font-size: 1.2rem;
 }
 
+.loading-screen {
+    padding-top: 16rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-content {
+    font-size: 1.75rem;
+}
+
 .bugs-list-section {
-    height: 77%;
-    position: relative;
-    overflow-y: scroll;
+    display: none;
 }
 
 .bugs-list-header {
-    position: sticky;
-    top: 0;
-    left: 0;
-    background-color: rgba(248,250,252);
+    background-color: #f8fafc;
 }
 
 .list-grid {
@@ -83,9 +83,6 @@
 
 .pagination-container {
     padding: 1rem;
-    position: sticky;
-    bottom: 0;
-    left: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -117,11 +114,6 @@
 
 @media screen and (max-width: 640px) {
 
-    .global-container {
-        height: unset;
-        overflow: unset;
-    }
-
     .main-title {
         font-size: 1.5rem;
     }
@@ -139,6 +131,14 @@
         font-size: 0.9rem;
     }
 
+    .loading-content {
+        font-size: 1.25rem;
+    }
+
+    .bugs-list-header {
+        position: relative;
+    }
+
     .column-name {
         font-size: 0.9rem;
     }
@@ -149,5 +149,9 @@
 
     .bug-description {
         display: none;
+    }
+
+    .pagination-container {
+        position: relative;
     }
 }

@@ -55,8 +55,12 @@ $(window).on("load", function() {
         $("#main-header-paragraph").html(`${bugList.length} bugs, ${bugList.filter((bug) => bug.state === "1").length} en cours, ${bugList.filter((bug) => bug.state === "2").length} traité`);
 
         getUserList().then((data) => {
+            
             userList = data.result.user;
             setInnerBugList();
+
+            $("#loading-screen").css("display", "none");
+            $("#bugs-list-section").css("display", "block");
         })
     });
 })

@@ -34,7 +34,11 @@
             </div>
         </header>
 
-        <section class="bugs-list-section">
+        <div class="loading-screen" id="loading-screen">
+            <p class="loading-content">⏳ Chargement...</p>
+        </div>
+
+        <section class="bugs-list-section" id="bugs-list-section">
             <div class="list-grid bugs-list-header">
                 <div class="column-name rubrique-name">Désignation</div>
                 <div class="column-name rubrique-date">Date</div>
@@ -45,11 +49,11 @@
             <div class="inner-bug-list-container">
                 <div id="inner-bug-list"></div>
             </div>
-        </section>
 
-        <div class="pagination-container">
-            <div id="pagination"></div>
-        </div>
+            <div class="pagination-container" id="pagination-container">
+                <div id="pagination"></div>
+            </div>
+        </section>
     </div>
     
     <script src="./assets/script/lib/jquery-3.6.0.min.js"></script>
