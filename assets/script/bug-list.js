@@ -77,37 +77,47 @@ function getBugs(userId = "0") {
 
 function setInnerBugList() {
 
-    let innerContent = "";
+    $("#pagination").pagination({
+        dataSource: bugList,
+        autoHidePrevious: true,
+        showNavigator: true,
+        formatNavigator: '<span>Page: <%= currentPage %></span> sur <%= totalPage %>',
+        className: 'paginationjs-theme-green paginationjs-big',
+        callback: function(bugs) {
 
-    bugList.map((bug) => {
+            let innerContent = "";
 
-        innerContent += `
-            <div class="list-grid" id="list-grid">
-                <div class="list-grid-item bug-info">
-                    <h3 class="bug-title">${bug.title}</h3>
-                    <p class="bug-description">${bug.description}</p>
-                </div>
+            bugs.map((bug) => {
 
-                <p class="list-grid-item bug-date">${formatDate(bug.timestamp)}</p>
+                innerContent += `
+                    <div class="list-grid" id="list-grid">
+                        <div class="list-grid-item bug-info">
+                            <h3 class="bug-title">${bug.title}</h3>
+                            <p class="bug-description">${bug.description}</p>
+                        </div>
+        
+                        <p class="list-grid-item bug-date">${formatDate(bug.timestamp)}</p>
+        
+                        <p class="list-grid-item bug-name">${userList[parseInt(bug.user_id)]}</p>
+        
+                        <div class="list-grid-item bug-state">
+                            <select name="bug-state" class="bug-state-select" onchange="changeBugState(${bug.id}, this)">
+                                <option value="0" ${bug.state === "0" ? "selected" : ""}>Non traité</option>
+                                <option value="1" ${bug.state === "1" ? "selected" : ""}>En cours</option>
+                                <option value="2" ${bug.state === "2" ? "selected" : ""}>Traité</option>
+                            </select>
+                        </div>
+        
+                        <div class="list-grid-item">
+                            <button class="delete-button" onclick="deleteBug(${bug.id})">Supprimer</button>
+                        </div>
+                    </div>
+                `
+            })
 
-                <p class="list-grid-item bug-name">${userList[parseInt(bug.user_id)]}</p>
-
-                <div class="list-grid-item bug-state">
-                    <select name="bug-state" class="bug-state-select" onchange="changeBugState(${bug.id}, this)">
-                        <option value="0" ${bug.state === "0" ? "selected" : ""}>Non traité</option>
-                        <option value="1" ${bug.state === "1" ? "selected" : ""}>En cours</option>
-                        <option value="2" ${bug.state === "2" ? "selected" : ""}>Traité</option>
-                    </select>
-                </div>
-
-                <div class="list-grid-item">
-                    <button class="delete-button" onclick="deleteBug(${bug.id})">Supprimer</button>
-                </div>
-            </div>
-        `
+            $("#inner-bug-list").html(innerContent);
+        }
     })
-
-    $("#inner-bug-list").html(innerContent);
 }
 
 function getUserList() {
