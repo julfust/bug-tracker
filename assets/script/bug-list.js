@@ -1,13 +1,16 @@
+// GLOBAL VARIABLES: DATAS FOR BUG LIST AND USER LIST.
 let userList = [];
 let bugList = [];
 
 $(window).on("load", function() {
 
+    // Denial access if user tries to access page by URL without authentification token.
     if(!localStorage.getItem("token")) {
         window.location.href = "/";
         return;
     }
 
+    // Event listener: get only user's bugs.
     $("#filter-user-bug").click(() => getBugs(localStorage.getItem("userId")).then((data) => {
 
         bugList = data.result.bug;
@@ -22,6 +25,7 @@ $(window).on("load", function() {
         })
     }));
     
+    // Event listener: get all bug.
     $("#no-filter").click(() => getBugs().then((data) => {
 
         bugList = data.result.bug;
@@ -36,6 +40,7 @@ $(window).on("load", function() {
         })
     }));
 
+    // Event listener: Trigger for sign-out system.
     $("#sign-out-button").click(() => signOut().then((data) => {
 
         if(data.result.status === "failure") {
@@ -48,6 +53,7 @@ $(window).on("load", function() {
         window.location.href = "/";
     }));
 
+    // View initialisation.
     getBugs().then((data) => {
 
         bugList = data.result.bug;
@@ -65,6 +71,7 @@ $(window).on("load", function() {
     });
 })
 
+// Ajax request for fetching bugs.
 function getBugs(userId = "0") {
 
     return $.ajax({
@@ -74,6 +81,7 @@ function getBugs(userId = "0") {
     })
 }
 
+// Ajax request for fetching users.
 function getUserList() {
 
     return $.ajax({
@@ -83,6 +91,7 @@ function getUserList() {
     })
 }
 
+// Function used to set bug list content.
 function setInnerBugList() {
 
     $("#pagination").pagination({
@@ -128,6 +137,7 @@ function setInnerBugList() {
     })
 }
 
+// Function used to format bug's date.
 function formatDate(timeStamp) {
 
     let bugDate = new Date(timeStamp);
@@ -138,6 +148,7 @@ function formatDate(timeStamp) {
     return bugDate.toLocaleDateString("fr-FR");
 }
 
+// Function used to change bug state (Ajax request + update view).
 function changeBugState(bugId, selectBar) {
 
     $.ajax({
@@ -152,6 +163,7 @@ function changeBugState(bugId, selectBar) {
     });
 }
 
+// Function used to delete bug (Ajax request + update view).
 function deleteBug(bugId) {
 
     $.confirm({

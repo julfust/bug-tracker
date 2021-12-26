@@ -1,3 +1,4 @@
+// Ajax request for user sign-out.
 function signOut() {
 
     return $.ajax({
@@ -7,6 +8,7 @@ function signOut() {
     })
 }
 
+// Function used to display error messages on forms (sign-in, sign-out and add-bug).
 function showError(errorMessage) {
 
     $("#sign-up-paragraph").css("padding-bottom", "1rem");

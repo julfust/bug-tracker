@@ -42,8 +42,16 @@
 }
 
 .bug-title {
-    text-align: center;
     margin-bottom: 0.25rem;
+    text-align: center;
+    overflow: auto;
+}
+
+.bug-description {
+    width: 10rem;
+    max-height: 5rem;
+    text-align: center;
+    overflow: auto;
 }
 
 .bug-state {
@@ -73,13 +81,6 @@
 
 .bug-title, .bug-description, .bug-date, .bug-name, .bug-state-select, .delete-button {
     font-size: 1.1rem;
-}
-
-.bug-description {
-    width: 10rem;
-    max-height: 5rem;
-    text-align: center;
-    overflow: auto;
 }
 
 .pagination-container {

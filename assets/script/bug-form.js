@@ -1,16 +1,20 @@
 $(window).on("load", function() {
 
+    // Denial access if user tries to access page by URL without authentification token.
     if(!localStorage.getItem("token")) {
         window.location.href = "/";
         return;
     }
 
+    // Form datas values.
     let title = "";
     let description = "";
 
+    // Event listener: Update form datas values.
     $("#input-field-title").change((e) => title = e.target.value);
     $("#input-field-description").change((e) => description = e.target.value);
 
+    // Event listener: Form datas submission.
     $("#submit-form-button").click((e) => {
 
         e.preventDefault();
@@ -35,6 +39,7 @@ $(window).on("load", function() {
         });
     })
 
+    // Event listener: Trigger for sign-out system.
     $("#sign-out-button").click(() => signOut().then((data) => {
 
         if(data.result.status === "failure") {
@@ -48,6 +53,7 @@ $(window).on("load", function() {
     }));
 })
 
+// Ajax request for adding bug.
 function addBug(formData) {
 
     return $.post(`http://greenvelvet.alwaysdata.net/bugTracker/api/add/${localStorage.getItem("token")}/${localStorage.getItem("userId")}`, formData);

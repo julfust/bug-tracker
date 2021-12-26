@@ -1,18 +1,22 @@
 $(window).on("load", function() {
 
+    //Remove token if user accesses page by URL.
     if(localStorage.getItem("token")) {
         localStorage.removeItem("token");
         localStorage.removeItem("userId");
     }
 
+    // Form datas values.
     let login = "";
     let password = "";
     let passwordConfirm = "";
 
+    // Event listener: Update form datas values.
     $("#input-field-login").change((e) => login = e.target.value);
     $("#input-field-password").change((e) => password = e.target.value);
     $("#input-field-password-confirm").change((e) => passwordConfirm = e.target.value);
 
+    // Event listener: Form datas submission.
     $("#submit-form-button").click((e) => {
 
         e.preventDefault();
@@ -41,6 +45,7 @@ $(window).on("load", function() {
     })
 })
 
+// Ajax request for user sign-in.
 function signUp(login, password) {
 
     return $.ajax({
