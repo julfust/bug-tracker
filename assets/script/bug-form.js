@@ -5,18 +5,6 @@ $(window).on("load", function() {
         return;
     }
 
-    $("#sign-out-button").click(() => signOut().then((data) => {
-
-        if(data.result.status === "failure") {
-            alert("Erreur: déconnexion impossible");
-            return;
-        }
-        
-        localStorage.removeItem("token");
-        localStorage.removeItem("userId");
-        window.location.href = "/";
-    }));
-
     let title = "";
     let description = "";
 
@@ -46,30 +34,21 @@ $(window).on("load", function() {
             window.location.href = "/bug-list.html";
         });
     })
+
+    $("#sign-out-button").click(() => signOut().then((data) => {
+
+        if(data.result.status === "failure") {
+            alert("Erreur: déconnexion impossible");
+            return;
+        }
+        
+        localStorage.removeItem("token");
+        localStorage.removeItem("userId");
+        window.location.href = "/";
+    }));
 })
-
-function signOut() {
-
-    return $.ajax({
-        url: `http://greenvelvet.alwaysdata.net/bugTracker/api/logout/${localStorage.getItem("token")}`,
-        async: true,
-        dataType: 'jsonp'
-    })
-}
 
 function addBug(formData) {
 
     return $.post(`http://greenvelvet.alwaysdata.net/bugTracker/api/add/${localStorage.getItem("token")}/${localStorage.getItem("userId")}`, formData);
-}
-
-function showError(errorMessage) {
-
-    $("#sign-up-paragraph").css("padding-bottom", "1rem");
-
-    $("#error-message").text(errorMessage);
-    $("#error-message").css("display", "block");
-    
-    $(".input-field").each(function() {
-        $(this).css("border-color", "red");
-    });
 }

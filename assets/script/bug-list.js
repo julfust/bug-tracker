@@ -8,18 +8,6 @@ $(window).on("load", function() {
         return;
     }
 
-    $("#sign-out-button").click(() => signOut().then((data) => {
-
-        if(data.result.status === "failure") {
-            alert("Erreur: déconnexion impossible");
-            return;
-        }
-        
-        localStorage.removeItem("token");
-        localStorage.removeItem("userId");
-        window.location.href = "/";
-    }));
-
     $("#filter-user-bug").click(() => getBugs(localStorage.getItem("userId")).then((data) => {
 
         bugList = data.result.bug;
@@ -48,6 +36,18 @@ $(window).on("load", function() {
         })
     }));
 
+    $("#sign-out-button").click(() => signOut().then((data) => {
+
+        if(data.result.status === "failure") {
+            alert("Erreur: déconnexion impossible");
+            return;
+        }
+        
+        localStorage.removeItem("token");
+        localStorage.removeItem("userId");
+        window.location.href = "/";
+    }));
+
     getBugs().then((data) => {
 
         bugList = data.result.bug;
@@ -65,20 +65,19 @@ $(window).on("load", function() {
     });
 })
 
-function signOut() {
+function getBugs(userId = "0") {
 
     return $.ajax({
-        url: `http://greenvelvet.alwaysdata.net/bugTracker/api/logout/${localStorage.getItem("token")}`,
+        url: `http://greenvelvet.alwaysdata.net/bugTracker/api/list/${localStorage.getItem("token")}/${userId}`,
         async: true,
         dataType: 'jsonp'
     })
 }
 
-
-function getBugs(userId = "0") {
+function getUserList() {
 
     return $.ajax({
-        url: `http://greenvelvet.alwaysdata.net/bugTracker/api/list/${localStorage.getItem("token")}/${userId}`,
+        url: `http://greenvelvet.alwaysdata.net/bugTracker/api/users/${localStorage.getItem("token")}`,
         async: true,
         dataType: 'jsonp'
     })
@@ -126,15 +125,6 @@ function setInnerBugList() {
 
             $("#inner-bug-list").html(innerContent);
         }
-    })
-}
-
-function getUserList() {
-
-    return $.ajax({
-        url: `http://greenvelvet.alwaysdata.net/bugTracker/api/users/${localStorage.getItem("token")}`,
-        async: true,
-        dataType: 'jsonp'
     })
 }
 
