@@ -76,9 +76,10 @@
 }
 
 .bug-description {
+    width: 10rem;
     max-height: 5rem;
     text-align: center;
-    overflow-y: auto;
+    overflow: auto;
 }
 
 .pagination-container {
